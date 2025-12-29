@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.bibliotheque.controller.MainController"
+            prefWidth="900"
+            prefHeight="600">
+
+    <center>
+        <TabPane>
+            <tabs>
+                <Tab text="Livres">
+                    <BorderPane padding="20"/>
+                </Tab>
+
+                <Tab text="Membres">
+                    <BorderPane padding="20"/>
+                </Tab>
+
+                <Tab text="Emprunts">
+                    <BorderPane padding="20"/>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+
+</BorderPane>
+
