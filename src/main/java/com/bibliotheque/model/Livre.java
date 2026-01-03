@@ -1,22 +1,27 @@
-package fr.bibliotheque.model;
+package com.model;
 
-public class Livre extends Document implements Empruntable {
-    private String auteur;
-    private String isbn;
-    private boolean disponible = true;
-    
-    public Livre(String id, String titre, String auteur, String isbn) {
-        super(id, titre);
-        this.auteur = auteur;
-        this.isbn = isbn;
+public class Livre {
+    public String Titre ;
+    public String Isbn ;
+    public boolean Disponible ;
+
+    public String getTitre() {
+        return Titre;
+    }
+    public void setTitre() {
+        this.Titre = Titre;
+    }
+    public String getIsbn() {
+        return Isbn;
+    }
+    public void setIsbn(String isbn) {
+        this.Isbn = isbn;
+    }
+    public boolean isDisponible() {
+        return Disponible;
+    }   
+    public void setDisponible(boolean disponible) {
+        this.Disponible = disponible;
     }
     
-    @Override
-    public boolean peutEtreEmprunte() {
-        return disponible;
-    }
-    
-    // Getters
-    public String getAuteur() { return auteur; }
-    public String getIsbn() { return isbn; }
 }
