@@ -1,4 +1,4 @@
-package com.exception;
+package com.bibliotheque.exception;
 import java.time.LocalDate;
 
 public class EmpruntDejaRetourneException extends Exception {
@@ -11,3 +11,4 @@ public class EmpruntDejaRetourneException extends Exception {
         super("L'emprunt #" + empruntId + " a déjà été retourné le " + dateRetour + ".");
     }
 }
+
