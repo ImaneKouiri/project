@@ -9,6 +9,7 @@ CREATE TABLE emprunt (
     date_retour_effective DATE,
 
     rendu BOOLEAN DEFAULT FALSE,
+    penalite DOUBLE DEFAULT 0.0,
 
     CONSTRAINT fk_emprunt_livre
         FOREIGN KEY (isbn_livre)
@@ -17,4 +18,5 @@ CREATE TABLE emprunt (
     CONSTRAINT fk_emprunt_membre
         FOREIGN KEY (id_membre)
         REFERENCES membre(id)
+
 );
