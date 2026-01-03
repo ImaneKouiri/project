@@ -1,4 +1,4 @@
-package com.exception;
+package com.bibliotheque.exception;
 
 public class LimiteEmpruntDepasseeException extends Exception {
     public LimiteEmpruntDepasseeException() {
@@ -6,3 +6,4 @@ public class LimiteEmpruntDepasseeException extends Exception {
     }
     
 }
+
