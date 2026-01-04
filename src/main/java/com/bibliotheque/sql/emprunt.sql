@@ -10,13 +10,6 @@ CREATE TABLE IF NOT EXISTS emprunt (
 
     rendu BOOLEAN DEFAULT FALSE,
     penalite DOUBLE DEFAULT 0.0,
-
-    -- Index pour performance
-    INDEX idx_emprunt_isbn (isbn_livre),
-    INDEX idx_emprunt_membre (id_membre),
-    INDEX idx_emprunt_rendu (rendu),
-
-    -- Clés étrangères
     CONSTRAINT fk_emprunt_livre
         FOREIGN KEY (isbn_livre)
         REFERENCES livres(isbn)
@@ -25,8 +18,5 @@ CREATE TABLE IF NOT EXISTS emprunt (
 
     CONSTRAINT fk_emprunt_membre
         FOREIGN KEY (id_membre)
-        REFERENCES membres(id)
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT
-
+        REFERENCES membre(id)
 );
