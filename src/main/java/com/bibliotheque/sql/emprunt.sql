@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS emprunt (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    isbn_livre VARCHAR(20) NOT NULL,
+    isbn VARCHAR(20) NOT NULL,
     id_membre INT NOT NULL,
     date_emprunt DATE NOT NULL,
     date_retour_prevue DATE NOT NULL,
@@ -83,4 +83,5 @@ INSERT INTO emprunt (
     5,
     '2025-01-10',
     '2025-01-24'
+
 );
