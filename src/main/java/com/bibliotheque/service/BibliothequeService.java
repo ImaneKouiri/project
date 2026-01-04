@@ -3,6 +3,9 @@ package com.bibliotheque.service;
 import com.bibliotheque.dao.MembreDAO;
 import com.bibliotheque.dao.impl.MembreDAOImpl;
 import com.bibliotheque.model.Membre;
+import com.bibliotheque.dao.EmpruntDAO;  
+import com.bibliotheque.dao.impl.EmpruntDAOImpl; 
+import com.bibliotheque.model.Emprunt;
 import com.bibliotheque.exception.ValidationException;
 import com.bibliotheque.exception.MembreInactifException;
 
@@ -12,9 +15,11 @@ import java.util.stream.Collectors;
 
 public class BibliothequeService {
     private MembreDAO membreDAO;
+    private EmpruntDAO empruntDAO; 
 
     public BibliothequeService() {
         this.membreDAO = new MembreDAOImpl();
+        this.empruntDAO = new EmpruntDAOImpl(); 
     }
 
     // Ajoute un nouveau membre
@@ -136,4 +141,16 @@ public class BibliothequeService {
             throw new ValidationException("L'email du membre n'est pas valide.");
         }
     }
+
+    public List<Emprunt> getHistoriqueEmprunts(int membreId) throws SQLException, ValidationException {
+    // Vérifier que le membre existe
+    Membre membre = membreDAO.findById(membreId);
+    if (membre == null) {
+        throw new ValidationException("Membre introuvable avec l'ID : " + membreId);
+    }
+    
+    // Récupérer tous les emprunts du membre via le DAO
+    return empruntDAO.findByMembre(membreId);
+ }
+
 }
