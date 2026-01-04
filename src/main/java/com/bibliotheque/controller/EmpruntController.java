@@ -109,25 +109,14 @@ public class EmpruntController {
                                 "Limite maximale : 3 emprunts simultanés");
                 return;
             }
-<<<<<<< HEAD
 
             // Livre livre = livreService.findByIsbn(isbn);
-            Livre livre = new Livre();
-=======
-            
-            Livre livre = new Livre(null, null, null, 0);
->>>>>>> bf43f1ae8d515c29ef20ba26de27d258b8113c7b
+            Livre livre = new Livre(membreIdText, membreIdText, membreIdText, membreId);
             livre.setIsbn(isbn);
             livre.setDisponible(true);
 
             Membre membre = new Membre();
             membre.setId(membreId);
-<<<<<<< HEAD
-
-=======
-            
-            
->>>>>>> bf43f1ae8d515c29ef20ba26de27d258b8113c7b
             empruntService.emprunterLivre(livre, membre);
 
             LocalDate dateRetour = LocalDate.now().plusWeeks(14);
