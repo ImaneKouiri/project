@@ -1,6 +1,8 @@
 package com.bibliotheque.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 
 public class MainController {
@@ -17,11 +19,13 @@ public class MainController {
   @FXML
   private VBox empruntsPane;
 
+  private Node empruntView; // chargé une seule fois
+
   @FXML
   public void initialize() {
-    // Au démarrage, on affiche seulement le menu
     hideAll();
     menuPane.setVisible(true);
+    loadEmpruntView();
     System.out.println("MainController chargé avec succès");
   }
 
@@ -30,6 +34,17 @@ public class MainController {
     livresPane.setVisible(false);
     membresPane.setVisible(false);
     empruntsPane.setVisible(false);
+  }
+
+  private void loadEmpruntView() {
+    try {
+      FXMLLoader loader = new FXMLLoader(
+          getClass().getResource("/fxml/EmpruntView.fxml"));
+      empruntView = loader.load();
+      empruntsPane.getChildren().add(empruntView);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   @FXML
