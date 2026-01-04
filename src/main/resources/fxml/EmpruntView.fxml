@@ -3,25 +3,64 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <VBox xmlns="http://javafx.com/javafx/21"
-    xmlns:fx="http://javafx.com/fxml"
-    fx:controller="com.bibliotheque.controller.EmpruntController"
-    spacing="15"
-    alignment="CENTER"
-    prefWidth="800">
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.bibliotheque.controller.EmpruntController"
+      spacing="15"
+      alignment="TOP_CENTER"
+      prefWidth="900"
+      prefHeight="600">
 
+    <!-- TITRE -->
     <Label text="Gestion des Emprunts"
-        style="-fx-font-size: 18px; -fx-font-weight: bold;"
-        styleClass="section-title" />
+           style="-fx-font-size: 20px; -fx-font-weight: bold;" />
 
-    <Label text="Emprunter un livre" style="-fx-font-weight: bold;" />
+    <!-- FORMULAIRE EMPRUNT -->
+    <VBox spacing="10" style="-fx-padding: 10; -fx-border-color: #ccc;">
+        <Label text="Emprunter un livre" style="-fx-font-weight: bold;" />
 
-    <HBox spacing="10">
-        <Label text="Livre ISBN:"/>
-        <TextField promptText="ISBN du livre"/>
+        <HBox spacing="10">
+            <Label text="ISBN Livre:"/>
+            <TextField fx:id="isbnField" promptText="ISBN du livre"/>
+        </HBox>
+
+        <HBox spacing="10">
+            <Label text="ID Membre:"/>
+            <TextField fx:id="membreIdField" promptText="ID du membre"/>
+        </HBox>
+
+        <Button text="Enregistrer l'emprunt"
+                onAction="#handleEmprunter"/>
+    </VBox>
+
+    <!-- TABLE DES EMPRUNTS -->
+    <VBox spacing="10" prefWidth="850">
+        <Label text="Liste des emprunts" style="-fx-font-weight: bold;" />
+
+        <TableView fx:id="empruntTable" prefHeight="250">
+            <columns>
+                <TableColumn fx:id="idCol" text="ID"/>
+                <TableColumn fx:id="isbnCol" text="ISBN"/>
+                <TableColumn fx:id="membreCol" text="Membre"/>
+                <TableColumn fx:id="dateEmpruntCol" text="Date Emprunt"/>
+                <TableColumn fx:id="dateRetourCol" text="Retour Prévu"/>
+                <TableColumn fx:id="statutCol" text="Statut"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+    <!-- BOUTONS ACTION -->
+    <HBox spacing="15">
+        <Button text="Retourner le livre"
+                onAction="#handleRetourner"/>
+        <Button text="Emprunts en retard"
+                onAction="#handleRetards"/>
+        <Button text="Rafraîchir"
+                onAction="#handleRefresh"/>
     </HBox>
 
-    <Button text="Enregistrer l'emprunt"/>
+    <!-- MESSAGE -->
+    <Label fx:id="messageLabel"
+           style="-fx-text-fill: green; -fx-font-weight: bold;"/>
 
 </VBox>
