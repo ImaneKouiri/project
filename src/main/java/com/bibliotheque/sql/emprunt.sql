@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS emprunt (
+CREATE TABLE IF NOT EXISTS emprunts (
     id INT AUTO_INCREMENT PRIMARY KEY,
 
     isbn_livre VARCHAR(20) NOT NULL,
@@ -91,3 +91,4 @@ INSERT INTO emprunts (
     '2025-01-10',
     '2025-01-24'
 );
+
