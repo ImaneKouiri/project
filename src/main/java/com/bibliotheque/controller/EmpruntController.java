@@ -117,7 +117,6 @@ public class EmpruntController {
 
             Membre membre = new Membre();
             membre.setId(membreId);
-
             empruntService.emprunterLivre(livre, membre);
 
             LocalDate dateRetour = LocalDate.now().plusWeeks(14);
