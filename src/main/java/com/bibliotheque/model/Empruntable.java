@@ -1,4 +1,4 @@
-package fr.bibliotheque.model;
+package com.bibliotheque.model;
 
 public interface Empruntable {
     boolean peutEtreEmprunte();

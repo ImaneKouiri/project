@@ -1,6 +1,6 @@
 package com.bibliotheque.dao.impl;
 
-import util.DatabaseConnection;
+import com.bibliotheque.util.DatabaseConnection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,17 +106,17 @@ public class EmpruntDAOImpl implements EmpruntDAO {
         String sql = "UPDATE emprunts SET rendu=?, date_retour_effective=?, penalite=? WHERE id=?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setBoolean(1, e.isRendu());
-            
+
             // Gestion de la date de retour effective (peut être null)
             if (e.getDateRetourEffective() != null) {
                 ps.setDate(2, Date.valueOf(e.getDateRetourEffective()));
             } else {
                 ps.setNull(2, java.sql.Types.DATE);
             }
-            
+
             ps.setDouble(3, e.getPenalite());
             ps.setInt(4, e.getId());
-            
+
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected == 0) {
                 System.err.println("Aucun emprunt trouvé avec l'ID : " + e.getId());
@@ -144,31 +144,30 @@ public class EmpruntDAOImpl implements EmpruntDAO {
 
     private Emprunt mapResultSetToEmprunt(ResultSet rs) throws SQLException {
         Emprunt emprunt = new Emprunt();
-        
+
         emprunt.setId(rs.getInt("id"));
         emprunt.setDateEmprunt(rs.getDate("date_emprunt").toLocalDate());
         emprunt.setDateRetourPrevue(rs.getDate("date_retour_prevue").toLocalDate());
-        
+
         Date dateRetourEffective = rs.getDate("date_retour_effective");
         if (dateRetourEffective != null) {
             emprunt.setDateRetourEffective(dateRetourEffective.toLocalDate());
         }
-        
+
         emprunt.setRendu(rs.getBoolean("rendu"));
         emprunt.setPenalite(rs.getDouble("penalite"));
-        
+
         Livre livre = new Livre();
         livre.setIsbn(rs.getString("isbn_livre"));
         emprunt.setLivre(livre);
-        
+
         Membre membre = new Membre();
         membre.setId(rs.getInt("id_membre"));
         emprunt.setMembre(membre);
-        
+
         return emprunt;
     }
 
-   
     public List<Emprunt> findEmpruntsEnRetard() {
         List<Emprunt> emprunts = new ArrayList<>();
         String sql = "SELECT * FROM emprunts WHERE rendu=false AND date_retour_prevue < CURDATE() ORDER BY date_retour_prevue ASC";
@@ -184,7 +183,6 @@ public class EmpruntDAOImpl implements EmpruntDAO {
         return emprunts;
     }
 
-    
     public boolean isLivreEmprunte(String isbn) {
         String sql = "SELECT COUNT(*) FROM emprunts WHERE isbn_livre=? AND rendu=false";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
