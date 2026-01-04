@@ -9,12 +9,11 @@ public abstract class Document {
         this.titre = titre;
     }
 
-    // Getters seulement pour commencer
-    public String getId() {
-        return id;
-    }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
-    public String getTitre() {
-        return titre;
-    }
+    public String getTitre() { return titre; }
+    public void setTitre(String titre) { this.titre = titre; }
+
+    public abstract double calculerPenaliteRetard(int joursRetard);
 }
