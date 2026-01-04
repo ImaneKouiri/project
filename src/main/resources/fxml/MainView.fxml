@@ -1,33 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.bibliotheque.controller.MainController"
-            prefWidth="900"
-            prefHeight="600">
+            prefWidth="1000"
+            prefHeight="650"
+            stylesheets="@/css/main.css">
+
+    <top>
+        <HBox styleClass="header">
+            <Label text="Système de Gestion de Bibliothèque"
+                styleClass="header-title"/>
+        </HBox>
+    </top>
 
     <center>
-        <TabPane>
-            <tabs>
-                <Tab text="Livres">
-                    <BorderPane padding="20"/>
-                </Tab>
+        <StackPane styleClass="content-root">
 
-                <Tab text="Membres">
-                    <BorderPane padding="20"/>
-                </Tab>
+            <VBox fx:id="menuPane" styleClass="card" spacing="25">
+                <Label text="Menu principal" styleClass="section-title"/>
 
-                <Tab text="Emprunts">
-                    <BorderPane padding="20"/>
-                </Tab>
-            </tabs>
-        </TabPane>
+                <HBox spacing="20" alignment="CENTER">
+                    <Button text="Livres" onAction="#showLivres" styleClass="menu-button"/>
+                    <Button text="Membres" onAction="#showMembres" styleClass="menu-button"/>
+                    <Button text="Emprunts" onAction="#showEmprunts" styleClass="menu-button"/>
+                </HBox>
+            </VBox>
+
+            <VBox fx:id="membresPane" styleClass="card" spacing="20" visible="false">
+                <Button text="← Retour" onAction="#backToMenu" styleClass="back-button"/>
+                <Label text="Gestion des Membres" styleClass="section-title"/>
+            </VBox>
+
+            <VBox fx:id="livresPane" styleClass="card" spacing="20" visible="false">
+                <Button text="← Retour" onAction="#backToMenu" styleClass="back-button"/>
+                <Label text="Gestion des Livres" styleClass="section-title"/>
+            </VBox>
+
+            <VBox fx:id="empruntsPane" styleClass="card" spacing="20" visible="false">
+                <Button text="← Retour" onAction="#backToMenu" styleClass="back-button"/>
+                <Label text="Gestion des Emprunts" styleClass="section-title"/>
+            </VBox>
+
+        </StackPane>
     </center>
 
 </BorderPane>
-
