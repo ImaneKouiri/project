@@ -1,16 +1,16 @@
 CREATE TABLE IF NOT EXISTS emprunt (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    isbn VARCHAR(20) NOT NULL,
+
+    isbn_livre VARCHAR(20) NOT NULL,
     id_membre INT NOT NULL,
+
     date_emprunt DATE NOT NULL,
     date_retour_prevue DATE NOT NULL,
     date_retour_effective DATE,
+
     rendu BOOLEAN DEFAULT FALSE,
     penalite DOUBLE DEFAULT 0.0,
-    --index pour performance
-    INDEX idx_emprunt_isbn (isbn_livre),
-    INDEX idx_emprunt_membre (id_membre),
-    INDEX idx_emprunt_rendu (rendu),
+
     CONSTRAINT fk_emprunt_livre
         FOREIGN KEY (isbn_livre)
         REFERENCES livres(isbn)
@@ -21,23 +21,30 @@ CREATE TABLE IF NOT EXISTS emprunt (
         REFERENCES membres(id)
         ON UPDATE CASCADE
         ON DELETE RESTRICT
-
 );
---emprunt non rendu
-INSERT INTO emprunt (
+
+CREATE INDEX idx_emprunts_isbn
+ON emprunts(isbn_livre);
+
+CREATE INDEX idx_emprunts_membre
+ON emprunts(id_membre);
+
+CREATE INDEX idx_emprunts_rendu
+ON emprunts(rendu);
+-- emprunt non rendu
+INSERT INTO emprunts (
     isbn_livre,
     id_membre,
     date_emprunt,
     date_retour_prevue
 ) VALUES (
-    '978-2070612758',
+    '978-0134685991',
     1,
     CURDATE(),
     DATE_ADD(CURDATE(), INTERVAL 14 DAY)
 );
-
---emprunt rendu à temps
-INSERT INTO emprunt (
+-- emprunt rendu à temps
+INSERT INTO emprunts (
     isbn_livre,
     id_membre,
     date_emprunt,
@@ -46,7 +53,7 @@ INSERT INTO emprunt (
     rendu,
     penalite
 ) VALUES (
-    '978-2070368227',
+    '978-0201633610',
     2,
     '2025-01-01',
     '2025-01-15',
@@ -54,8 +61,8 @@ INSERT INTO emprunt (
     TRUE,
     0.0
 );
---emprunt en retard
-INSERT INTO emprunt (
+-- emprunt rendu en retard
+INSERT INTO emprunts (
     isbn_livre,
     id_membre,
     date_emprunt,
@@ -64,7 +71,7 @@ INSERT INTO emprunt (
     rendu,
     penalite
 ) VALUES (
-    '978-2070360023',
+    '978-0321356680',
     3,
     '2024-12-01',
     '2024-12-15',
@@ -72,16 +79,15 @@ INSERT INTO emprunt (
     TRUE,
     5.0
 );
---emprunt en cours
-INSERT INTO emprunt (
+-- emprunt en cours
+INSERT INTO emprunts (
     isbn_livre,
     id_membre,
     date_emprunt,
     date_retour_prevue
 ) VALUES (
-    '978-2070612758',
+    '978-0596009205',
     5,
     '2025-01-10',
     '2025-01-24'
-
 );
