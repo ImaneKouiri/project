@@ -7,19 +7,15 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.bibliotheque.controller.EmpruntController"
       spacing="15"
-      alignment="TOP_CENTER"
-      prefWidth="900"
-      prefHeight="600">
+      alignment="CENTER"
+      prefWidth="800">
 
-    <!-- TITRE -->
     <Label text="Gestion des Emprunts"
            style="-fx-font-size: 20px; -fx-font-weight: bold;" />
 
-    <!-- FORMULAIRE EMPRUNT -->
     <VBox spacing="10" style="-fx-padding: 10; -fx-border-color: #ccc;">
         <Label text="Emprunter un livre" style="-fx-font-weight: bold;" />
 
-        <HBox spacing="10">
             <Label text="ISBN Livre:"/>
             <TextField fx:id="isbnField" promptText="ISBN du livre"/>
         </HBox>
@@ -64,3 +60,4 @@
            style="-fx-text-fill: green; -fx-font-weight: bold;"/>
 
 </VBox>
+
