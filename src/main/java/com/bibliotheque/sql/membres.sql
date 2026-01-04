@@ -1,7 +1,4 @@
--- ============================================
--- Script de création de la table MEMBRES
--- Étudiant B - Module Gestion des Adhérents
--- ============================================
+
 
 -- Créer la base de données (si elle n'existe pas)
 CREATE DATABASE IF NOT EXISTS bibliotheque;
@@ -23,9 +20,6 @@ CREATE TABLE membres (
     INDEX idx_nom_prenom (nom, prenom)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ============================================
--- Insertion de données de test
--- ============================================
 
 INSERT INTO membres (nom, prenom, email, actif) VALUES
 ('Dupont', 'Jean', 'jean.dupont@email.com', TRUE),
@@ -44,9 +38,7 @@ INSERT INTO membres (nom, prenom, email, actif) VALUES
 ('David', 'Louis', 'louis.david@email.com', TRUE),
 ('Bertrand', 'Sarah', 'sarah.bertrand@email.com', TRUE);
 
--- ============================================
--- Vérification
--- ============================================
+
 
 -- Afficher tous les membres
 SELECT * FROM membres;
@@ -63,3 +55,4 @@ SELECT id, nom, prenom, email
 FROM membres 
 WHERE actif = TRUE 
 ORDER BY nom, prenom;
+
