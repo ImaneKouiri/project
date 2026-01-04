@@ -157,7 +157,7 @@ public class EmpruntDAOImpl implements EmpruntDAO {
         emprunt.setRendu(rs.getBoolean("rendu"));
         emprunt.setPenalite(rs.getDouble("penalite"));
 
-        Livre livre = new Livre(String isbn, String titre, String auteur, int anneePublication);
+        Livre livre = new Livre(null, null, null, 0);
         livre.setIsbn(rs.getString("isbn_livre"));
         emprunt.setLivre(livre);
 
