@@ -46,7 +46,7 @@ public class LivreDAOImpl implements LivreDAO {
         List<Livre> livres = new ArrayList<>();
         String sql = "SELECT * FROM livres ORDER BY titre";
         try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+                ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 livres.add(mapResultSetToLivre(rs));
             }
@@ -91,7 +91,7 @@ public class LivreDAOImpl implements LivreDAO {
         List<Livre> livres = new ArrayList<>();
         String sql = "SELECT * FROM livres WHERE disponible = true ORDER BY titre";
         try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+                ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 livres.add(mapResultSetToLivre(rs));
             }
@@ -118,11 +118,10 @@ public class LivreDAOImpl implements LivreDAO {
 
     private Livre mapResultSetToLivre(ResultSet rs) throws SQLException {
         Livre livre = new Livre(
-            rs.getString("isbn"),
-            rs.getString("titre"),
-            rs.getString("auteur"),
-            rs.getInt("annee_publication")
-        );
+                rs.getString("isbn"),
+                rs.getString("titre"),
+                rs.getString("auteur"),
+                rs.getInt("annee_publication"));
         livre.setDisponible(rs.getBoolean("disponible"));
         return livre;
     }
@@ -141,5 +140,3 @@ public class LivreDAOImpl implements LivreDAO {
         return livres;
     }
 }
-
-

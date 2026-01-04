@@ -2,17 +2,19 @@ package com.bibliotheque;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/livres.fxml"));
-        primaryStage.setTitle("Gestion des Livres");
-        primaryStage.setScene(new Scene(root, 800, 600));
-        primaryStage.show();
+    public void start(Stage stage) throws Exception {
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/fxml/MainView.fxml"));
+        Scene scene = new Scene(loader.load());
+        stage.setTitle("Système de Gestion de Bibliothèque");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static void main(String[] args) {

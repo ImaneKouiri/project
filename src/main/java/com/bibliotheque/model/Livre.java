@@ -33,36 +33,62 @@ public class Livre extends Document implements Empruntable {
         this.disponibleProperty = new SimpleBooleanProperty(true);
     }
 
-    public String getAuteur() { return auteur; }
+    public String getAuteur() {
+        return auteur;
+    }
+
     public void setAuteur(String auteur) {
         this.auteur = auteur;
         this.auteurProperty.set(auteur);
     }
 
-    public int getAnneePublication() { return anneePublication; }
+    public int getAnneePublication() {
+        return anneePublication;
+    }
+
     public void setAnneePublication(int anneePublication) {
         this.anneePublication = anneePublication;
         this.anneePublicationProperty.set(anneePublication);
     }
 
-    public boolean isDisponible() { return disponible; }
+    public boolean isDisponible() {
+        return disponible;
+    }
+
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
         this.disponibleProperty.set(disponible);
     }
 
-    public String getIsbn() { return isbn; }
-    public void setIsbn(String isbn){
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
         this.isbnProperty.set(isbn);
     }
 
     // Propriétés JavaFX
-    public StringProperty isbnProperty() { return isbnProperty; }
-    public StringProperty titreProperty() { return titreProperty; }
-    public StringProperty auteurProperty() { return auteurProperty; }
-    public IntegerProperty anneePublicationProperty() { return anneePublicationProperty; }
-    public BooleanProperty disponibleProperty() { return disponibleProperty; }
+    public StringProperty isbnProperty() {
+        return isbnProperty;
+    }
+
+    public StringProperty titreProperty() {
+        return titreProperty;
+    }
+
+    public StringProperty auteurProperty() {
+        return auteurProperty;
+    }
+
+    public IntegerProperty anneePublicationProperty() {
+        return anneePublicationProperty;
+    }
+
+    public BooleanProperty disponibleProperty() {
+        return disponibleProperty;
+    }
 
     @Override
     public double calculerPenaliteRetard(int joursRetard) {
@@ -94,4 +120,3 @@ public class Livre extends Document implements Empruntable {
         return titre + " (" + auteur + ", " + anneePublication + ")";
     }
 }
-
