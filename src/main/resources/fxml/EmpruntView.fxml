@@ -19,12 +19,12 @@
         <VBox spacing="10" style="-fx-padding: 10;">
             <HBox spacing="10">
                 <Label text="ISBN Livre :" />
-                <TextField fx:id="isbnField" promptText="ISBN du livre" />
+                <TextField promptText="ISBN du livre" />
             </HBox>
 
             <HBox spacing="10">
                 <Label text="ID Membre :" />
-                <TextField fx:id="membreIdField" promptText="ID du membre" />
+                <TextField promptText="ID du membre" />
             </HBox>
 
             <Button text="Enregistrer l'emprunt"
@@ -36,7 +36,7 @@
         <VBox spacing="10" style="-fx-padding: 10;">
             <HBox spacing="10">
                 <Label text="ID Emprunt :" />
-                <TextField fx:id="empruntIdField" promptText="ID de l'emprunt" />
+                <TextField promptText="ID de l'emprunt" />
             </HBox>
 
             <Button text="Retourner le livre"
@@ -49,7 +49,7 @@
 
             <HBox spacing="10">
                 <Label text="ID Membre :" />
-                <TextField fx:id="rechercheMembreIdField" promptText="ID du membre" />
+                <TextField promptText="ID du membre" />
                 <Button text="Rechercher"
                         onAction="#handleRechercherParMembre" />
             </HBox>
@@ -70,22 +70,22 @@
 
     <TableView fx:id="empruntsTable" prefHeight="250" prefWidth="950">
         <columns>
-            <TableColumn fx:id="colId" text="ID" prefWidth="60" />
-            <TableColumn fx:id="colIsbn" text="ISBN" prefWidth="120" />
-            <TableColumn fx:id="colMembreId" text="ID Membre" prefWidth="90" />
-            <TableColumn fx:id="colDateEmprunt" text="Date Emprunt" prefWidth="120" />
-            <TableColumn fx:id="colDateRetourPrevue" text="Retour Prévu" prefWidth="120" />
-            <TableColumn fx:id="colRendu" text="Rendu" prefWidth="80" />
-            <TableColumn fx:id="colPenalite" text="Pénalité (DH)" prefWidth="120" />
+            <TableColumn text="ID" prefWidth="60" />
+            <TableColumn text="ISBN" prefWidth="120" />
+            <TableColumn text="ID Membre" prefWidth="90" />
+            <TableColumn text="Date Emprunt" prefWidth="120" />
+            <TableColumn text="Retour Prévu" prefWidth="120" />
+            <TableColumn text="Rendu" prefWidth="80" />
+            <TableColumn text="Pénalité (DH)" prefWidth="120" />
         </columns>
     </TableView>
 
     <Label text="Résultats / Détails"
            style="-fx-font-size: 16px; -fx-font-weight: bold;" />
 
-    <TextArea fx:id="resultatArea"
-              prefHeight="150"
+    <TextArea prefHeight="150"
               editable="false"
               wrapText="true" />
 
 </VBox>
+
