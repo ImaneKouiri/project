@@ -33,17 +33,17 @@
 
             <VBox fx:id="membresPane" styleClass="card" spacing="20" visible="false">
                 <Button text="← Retour" onAction="#backToMenu" styleClass="back-button"/>
-                <Label text="Gestion des Membres" styleClass="section-title"/>
+                <fx:include source="MembreView.fxml"/>
             </VBox>
 
             <VBox fx:id="livresPane" styleClass="card" spacing="20" visible="false">
                 <Button text="← Retour" onAction="#backToMenu" styleClass="back-button"/>
-                <Label text="Gestion des Livres" styleClass="section-title"/>
+                <fx:include source="LivreView.fxml"/>
             </VBox>
 
             <VBox fx:id="empruntsPane" styleClass="card" spacing="20" visible="false">
                 <Button text="← Retour" onAction="#backToMenu" styleClass="back-button"/>
-                <Label text="Gestion des Emprunts" styleClass="section-title"/>
+                <fx:include source="EmpruntView.fxml"/>
             </VBox>
 
         </StackPane>
