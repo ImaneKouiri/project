@@ -6,7 +6,9 @@ import com.bibliotheque.exception.DonneesInvalidesException;
 import com.bibliotheque.exception.EmpruntDejaRetourneException;
 import com.bibliotheque.exception.EmpruntIntrouvableException;
 import com.bibliotheque.exception.LimiteEmpruntDepasseeException;
+import com.bibliotheque.service.BibliothequeService;
 import com.bibliotheque.service.EmpruntService;
+import com.bibliotheque.service.LivreService;
 import com.bibliotheque.model.Emprunt;
 
 import javafx.fxml.FXML;
@@ -118,9 +120,12 @@ public class EmpruntController {
                 return;
             }
             
-            Livre livre = LivreService.findByIsbn(isbn);
-            
-            Membre membre = membreService.findById(membreId);
+            Livre livre = new Livre(null, null, null, 0);
+            livre.setIsbn(isbn);
+            livre.setDisponible(true);
+
+            Membre membre = new Membre();
+            membre.setId(membreId);
             
             
             empruntService.emprunterLivre(livre, membre);

@@ -1,14 +1,10 @@
 package com.bibliotheque.dao.impl;
 
-import java.util.List;
-
-import com.bibliotheque.dao.MembreDAO;
 import com.bibliotheque.model.Membre;
 
-import util.DatabaseConnection;
+import com.bibliotheque.util.DatabaseConnection;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class MembreDAOImpl implements com.bibliotheque.dao.MembreDAO {
     // Implementation details here
