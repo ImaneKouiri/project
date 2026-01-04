@@ -12,26 +12,43 @@ import javafx.beans.property.SimpleStringProperty;
 import java.util.List;
 
 public class LivreController {
-    @FXML private TableView<Livre> tableLivres;
-    @FXML private TableColumn<Livre, String> colIsbn;
-    @FXML private TableColumn<Livre, String> colTitre;
-    @FXML private TableColumn<Livre, String> colAuteur;
-    @FXML private TableColumn<Livre, Integer> colAnnee;
-    @FXML private TableColumn<Livre, String> colDisponible;
+    @FXML
+    private TableView<Livre> tableLivres;
+    @FXML
+    private TableColumn<Livre, String> colIsbn;
+    @FXML
+    private TableColumn<Livre, String> colTitre;
+    @FXML
+    private TableColumn<Livre, String> colAuteur;
+    @FXML
+    private TableColumn<Livre, Integer> colAnnee;
+    @FXML
+    private TableColumn<Livre, String> colDisponible;
 
-    @FXML private TextField txtRecherche;
-    @FXML private ComboBox<String> comboCritere;
+    @FXML
+    private TextField txtRecherche;
+    @FXML
+    private ComboBox<String> comboCritere;
 
-    @FXML private TextField txtIsbn;
-    @FXML private TextField txtTitre;
-    @FXML private TextField txtAuteur;
-    @FXML private TextField txtAnnee;
+    @FXML
+    private TextField txtIsbn;
+    @FXML
+    private TextField txtTitre;
+    @FXML
+    private TextField txtAuteur;
+    @FXML
+    private TextField txtAnnee;
 
-    @FXML private Button btnAjouter;
-    @FXML private Button btnModifier;
-    @FXML private Button btnSupprimer;
-    @FXML private Button btnRechercher;
-    @FXML private Button btnEffacer;
+    @FXML
+    private Button btnAjouter;
+    @FXML
+    private Button btnModifier;
+    @FXML
+    private Button btnSupprimer;
+    @FXML
+    private Button btnRechercher;
+    @FXML
+    private Button btnEffacer;
 
     private LivreService livreService;
     private ObservableList<Livre> livresObservable;
@@ -42,17 +59,15 @@ public class LivreController {
         colTitre.setCellValueFactory(cellData -> cellData.getValue().titreProperty());
         colAuteur.setCellValueFactory(cellData -> cellData.getValue().auteurProperty());
         colAnnee.setCellValueFactory(cellData -> cellData.getValue().anneePublicationProperty().asObject());
-        colDisponible.setCellValueFactory(cellData ->
-            new SimpleStringProperty(cellData.getValue().isDisponible() ? "Oui" : "Non")
-        );
+        colDisponible.setCellValueFactory(
+                cellData -> new SimpleStringProperty(cellData.getValue().isDisponible() ? "Oui" : "Non"));
         comboCritere.getItems().addAll("Titre", "Auteur", "ISBN", "Tout");
         comboCritere.setValue("Titre");
         livresObservable = FXCollections.observableArrayList();
         tableLivres.setItems(livresObservable);
         chargerTousLesLivres();
         tableLivres.getSelectionModel().selectedItemProperty().addListener(
-            (obs, oldSelection, newSelection) -> afficherDetailsLivre(newSelection)
-        );
+                (obs, oldSelection, newSelection) -> afficherDetailsLivre(newSelection));
     }
 
     private void chargerTousLesLivres() {
@@ -84,16 +99,15 @@ public class LivreController {
     private void handleAjouter() {
         try {
             if (txtIsbn.getText().isEmpty() || txtTitre.getText().isEmpty() ||
-                txtAuteur.getText().isEmpty() || txtAnnee.getText().isEmpty()) {
+                    txtAuteur.getText().isEmpty() || txtAnnee.getText().isEmpty()) {
                 afficherErreur("Validation", "Tous les champs sont obligatoires");
                 return;
             }
             Livre livre = new Livre(
-                txtIsbn.getText(),
-                txtTitre.getText(),
-                txtAuteur.getText(),
-                Integer.parseInt(txtAnnee.getText())
-            );
+                    txtIsbn.getText(),
+                    txtTitre.getText(),
+                    txtAuteur.getText(),
+                    Integer.parseInt(txtAnnee.getText()));
             livreService.ajouterLivre(livre);
             chargerTousLesLivres();
             effacerFormulaire();
@@ -189,4 +203,3 @@ public class LivreController {
         alert.showAndWait();
     }
 }
-
