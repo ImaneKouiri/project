@@ -1,48 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
 
-<VBox xmlns="http://javafx.com/javafx/17" 
-      xmlns:fx="http://javafx.com/fxml/1" 
-      fx:controller="com.bibliotheque.controller.LivreController"
-      spacing="10"
-      style="-fx-padding: 15;">
-    
-    <padding>
-        <Insets top="10" right="10" bottom="10" left="10"/>
-    </padding>
-    
-    <!-- Barre de recherche -->
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <Label text="Recherche:"/>
-        <ComboBox fx:id="comboCritere" prefWidth="100"/>
-        <TextField fx:id="champRecherche" prefWidth="200"/>
-        <Button text="Rechercher" onAction="#handleRechercher"/>
-        <Button text="Rafraîchir" onAction="#handleRafraichir"/>
-    </HBox>
-    
-    <!-- Barre d'actions -->
+<VBox spacing="10" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.bibliotheque.controller.LivreController">
+    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
     <HBox spacing="10">
-        <Button text="Ajouter" onAction="#handleAjouter" style="-fx-background-color: green; -fx-text-fill: white;"/>
-        <Button text="Modifier" onAction="#handleModifier" style="-fx-background-color: blue; -fx-text-fill: white;"/>
-        <Button text="Supprimer" onAction="#handleSupprimer" style="-fx-background-color: red; -fx-text-fill: white;"/>
+        <Label text="Rechercher:"/>
+        <ComboBox fx:id="comboCritere" prefWidth="100"/>
+        <TextField fx:id="txtRecherche" prefWidth="300" promptText="Entrez votre recherche..."/>
+        <Button fx:id="btnRechercher" text="Rechercher" onAction="#handleRechercher"/>
+        <Button fx:id="btnEffacer" text="Effacer" onAction="#handleEffacer"/>
     </HBox>
-    
-    <!-- Message -->
-    <Label fx:id="labelMessage" style="-fx-font-style: italic;"/>
-    
-    <!-- Table des livres -->
     <TableView fx:id="tableLivres" VBox.vgrow="ALWAYS">
         <columns>
-            <TableColumn fx:id="colId" text="ID" prefWidth="80"/>
+            <TableColumn fx:id="colIsbn" text="ISBN" prefWidth="120"/>
             <TableColumn fx:id="colTitre" text="Titre" prefWidth="200"/>
             <TableColumn fx:id="colAuteur" text="Auteur" prefWidth="150"/>
             <TableColumn fx:id="colAnnee" text="Année" prefWidth="80"/>
-            <TableColumn fx:id="colIsbn" text="ISBN" prefWidth="120"/>
             <TableColumn fx:id="colDisponible" text="Disponible" prefWidth="100"/>
         </columns>
     </TableView>
-    
+    <GridPane hgap="10" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints halignment="RIGHT" prefWidth="100"/>
+            <ColumnConstraints prefWidth="300"/>
+        </columnConstraints>
+        <Label text="ISBN:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtIsbn" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <Label text="Titre:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtTitre" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        <Label text="Auteur:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtAuteur" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        <Label text="Année:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtAnnee" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+    </GridPane>
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="btnAjouter" text="Ajouter" onAction="#handleAjouter" prefWidth="100"/>
+        <Button fx:id="btnModifier" text="Modifier" onAction="#handleModifier" prefWidth="100"/>
+        <Button fx:id="btnSupprimer" text="Supprimer" onAction="#handleSupprimer" prefWidth="100"/>
+    </HBox>
 </VBox>
-
