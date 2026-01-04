@@ -6,7 +6,9 @@ import com.bibliotheque.exception.DonneesInvalidesException;
 import com.bibliotheque.exception.EmpruntDejaRetourneException;
 import com.bibliotheque.exception.EmpruntIntrouvableException;
 import com.bibliotheque.exception.LimiteEmpruntDepasseeException;
+import com.bibliotheque.service.BibliothequeService;
 import com.bibliotheque.service.EmpruntService;
+import com.bibliotheque.service.LivreService;
 import com.bibliotheque.model.Emprunt;
 
 import javafx.fxml.FXML;
@@ -107,15 +109,25 @@ public class EmpruntController {
                                 "Limite maximale : 3 emprunts simultanés");
                 return;
             }
+<<<<<<< HEAD
 
             // Livre livre = livreService.findByIsbn(isbn);
             Livre livre = new Livre();
+=======
+            
+            Livre livre = new Livre(null, null, null, 0);
+>>>>>>> bf43f1ae8d515c29ef20ba26de27d258b8113c7b
             livre.setIsbn(isbn);
             livre.setDisponible(true);
-            // Membre membre = membreService.findById(membreId);
+
             Membre membre = new Membre();
             membre.setId(membreId);
+<<<<<<< HEAD
 
+=======
+            
+            
+>>>>>>> bf43f1ae8d515c29ef20ba26de27d258b8113c7b
             empruntService.emprunterLivre(livre, membre);
 
             LocalDate dateRetour = LocalDate.now().plusWeeks(14);
@@ -403,4 +415,5 @@ public class EmpruntController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
 }
