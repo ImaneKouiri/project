@@ -9,7 +9,7 @@ import java.sql.*;
 public class MembreDAOImpl implements com.bibliotheque.dao.MembreDAO {
     // Implementation details here
 
-    private final Connection connection =  DatabaseConnection.getInstance().getConnection();
+    private final Connection connection = DatabaseConnection.getInstance().getConnection();
 
     @Override
     public void save(Membre membre) throws SQLException {
@@ -33,6 +33,7 @@ public class MembreDAOImpl implements com.bibliotheque.dao.MembreDAO {
         }
 
     }
+
     @Override
     public Membre findById(int id) throws SQLException {
         // Implementation here
@@ -55,6 +56,7 @@ public class MembreDAOImpl implements com.bibliotheque.dao.MembreDAO {
         }
         return null;
     }
+
     @Override
     public java.util.List<com.bibliotheque.model.Membre> findAll() throws SQLException {
         // Implementation here
@@ -62,7 +64,7 @@ public class MembreDAOImpl implements com.bibliotheque.dao.MembreDAO {
         String sql = "SELECT * FROM membres";
 
         try (java.sql.Statement stmt = connection.createStatement();
-             java.sql.ResultSet rs = stmt.executeQuery(sql)) {
+                java.sql.ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 com.bibliotheque.model.Membre membre = new com.bibliotheque.model.Membre();
@@ -76,6 +78,7 @@ public class MembreDAOImpl implements com.bibliotheque.dao.MembreDAO {
         }
         return membres;
     }
+
     @Override
     public void delete(int id) throws SQLException {
         // Implementation here
@@ -88,7 +91,7 @@ public class MembreDAOImpl implements com.bibliotheque.dao.MembreDAO {
     }
 
     @Override
-    public Membre findByEmail(String email) throws SQLException  {
+    public Membre findByEmail(String email) throws SQLException {
         // Implementation here
         String sql = "SELECT * FROM membres WHERE email = ?";
 
@@ -108,8 +111,9 @@ public class MembreDAOImpl implements com.bibliotheque.dao.MembreDAO {
             }
         }
         return null;
-        
+
     }
+
     @Override
     public java.util.List<com.bibliotheque.model.Membre> findActifs() throws SQLException {
         // Implementation here
@@ -117,7 +121,7 @@ public class MembreDAOImpl implements com.bibliotheque.dao.MembreDAO {
         String sql = "SELECT * FROM membres WHERE actif = TRUE";
 
         try (java.sql.Statement stmt = connection.createStatement();
-             java.sql.ResultSet rs = stmt.executeQuery(sql)) {
+                java.sql.ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 com.bibliotheque.model.Membre membre = new com.bibliotheque.model.Membre();
@@ -133,19 +137,18 @@ public class MembreDAOImpl implements com.bibliotheque.dao.MembreDAO {
     }
 
     @Override
-    public void update (Membre membre) throws SQLException {
-        String sql="UPDATE membres SET nom = ?, prenom = ?, email = ?, actif = ? WHERE id = ?";
+    public void update(Membre membre) throws SQLException {
+        String sql = "UPDATE membres SET nom = ?, prenom = ?, email = ?, actif = ? WHERE id = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-         pstmt.setString(1, membre.getNom());
-         pstmt.setString(2, membre.getPrenom());
-         pstmt.setString(3, membre.getEmail());
-         pstmt.setBoolean(4, membre.isActif());
-         pstmt.setInt(5, membre.getId());
-        
-         pstmt.executeUpdate();
+            pstmt.setString(1, membre.getNom());
+            pstmt.setString(2, membre.getPrenom());
+            pstmt.setString(3, membre.getEmail());
+            pstmt.setBoolean(4, membre.isActif());
+            pstmt.setInt(5, membre.getId());
+
+            pstmt.executeUpdate();
         }
-    
+
     }
 }
-
