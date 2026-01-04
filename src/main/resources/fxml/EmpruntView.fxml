@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.bibliotheque.controller.EmpruntController"
+      spacing="15"
+      alignment="CENTER"
+      style="-fx-padding: 25;">
+
+    <Label text="Gestion des Emprunts"
+           style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+    <Label text="Emprunter un livre"
+           style="-fx-font-weight: bold;" />
+
+    <TextField fx:id="isbnField"
+               promptText="ISBN du livre" />
+
+    <TextField fx:id="membreIdField"
+               promptText="ID du membre" />
+
+    <Button text="Emprunter"
+            onAction="#handleEmprunter"
+            prefWidth="160"/>
+
+    <Separator />
+
+    <Label text="Retourner un livre"
+           style="-fx-font-weight: bold;" />
+
+    <TextField fx:id="empruntIdField"
+               promptText="ID de l’emprunt" />
+
+    <Button text="Retourner"
+            onAction="#handleRetourner"
+            prefWidth="160"/>
+
+</VBox>
