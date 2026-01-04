@@ -5,277 +5,221 @@ import com.bibliotheque.service.BibliothequeService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class LivreController {
-
-    // Tableau des livres
-    @FXML
-    private TableView<Livre> tableLivres;
-
-    // Colonnes du tableau
-    @FXML
-    private TableColumn<Livre, String> colTitre;
-    @FXML
-    private TableColumn<Livre, String> colAuteur;
-    @FXML
-    private TableColumn<Livre, String> colIsbn;
-    @FXML
-    private TableColumn<Livre, String> colAnnee;
-    @FXML
-    private TableColumn<Livre, String> colStatut;
-
-    // Champs du formulaire d'ajout
-    @FXML
-    private TextField txtTitre;
-    @FXML
-    private TextField txtAuteur;
-    @FXML
-    private TextField txtIsbn;
-    @FXML
-    private TextField txtAnnee;
-
-    // Recherche
-    @FXML
-    private TextField txtRecherche;
-    @FXML
-    private ComboBox<String> comboRecherche;
-
-    // Labels et boutons
-    @FXML
-    private Label lblStatus;
-    @FXML
-    private Button btnAjouter;
-    @FXML
-    private Button btnRechercher;
-    @FXML
-    private Button btnActualiser;
-    @FXML
-    private Button btnSupprimer;
-
-    // VARIABLE DE CLASSE
-
+/**
+ * Contrôleur pour la vue de gestion des livres en JavaFX.
+ * Gère les interactions utilisateur avec l'interface graphique.
+ * 
+ 
+ */
+public class LivreController implements Initializable {
+    
+    // Composants de la table
+    @FXML private TableView<Livre> tableLivres;
+    @FXML private TableColumn<Livre, String> colId;
+    @FXML private TableColumn<Livre, String> colTitre;
+    @FXML private TableColumn<Livre, String> colAuteur;
+    @FXML private TableColumn<Livre, Integer> colAnnee;
+    @FXML private TableColumn<Livre, String> colIsbn;
+    @FXML private TableColumn<Livre, Boolean> colDisponible;
+    
+    // Composants de recherche
+    @FXML private TextField champRecherche;
+    @FXML private ComboBox<String> comboCritere;
+    
+    // Composants d'action
+    @FXML private Button boutonAjouter;
+    @FXML private Button boutonModifier;
+    @FXML private Button boutonSupprimer;
+    @FXML private Button boutonRechercher;
+    @FXML private Button boutonRafraichir;
+    
+    // Message utilisateur
+    @FXML private Label labelMessage;
+    
+    // Services et données
     private BibliothequeService service;
-    private ObservableList<Livre> listeLivres;
-
-    // INITIALISATION
-
-    @FXML
-    public void initialize() {
-        System.out.println("Initialisation du contrôleur Livre...");
-
+    private ObservableList<Livre> livresObservable;
+    
+    /**
+     * Initialise le contrôleur après le chargement du fichier FXML.
+     * Configure les composants et charge les données initiales.
+     * 
+     * @param location URL utilisée pour résoudre les chemins relatifs
+     * @param resources Ressources utilisées pour localiser les objets
+     */
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // Initialisation des services
         service = new BibliothequeService();
-
-        listeLivres = FXCollections.observableArrayList();
-
-        configurerColonnes();
-
+        livresObservable = FXCollections.observableArrayList();
+        
+        // Configuration des composants
+        configurerTable();
         configurerRecherche();
-
+        
+        // Chargement des données
         chargerLivres();
-
-        lblStatus.setText("Prêt - " + listeLivres.size() + " livre(s)");
-
-        System.out.println("Contrôleur initialisé avec succès !");
     }
-
-    // CONFIGURATION
-
-    private void configurerColonnes() {
+    
+    /**
+     * Configure les colonnes de la TableView.
+     * Associe chaque colonne à une propriété de la classe Livre.
+     */
+    private void configurerTable() {
+        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colTitre.setCellValueFactory(new PropertyValueFactory<>("titre"));
         colAuteur.setCellValueFactory(new PropertyValueFactory<>("auteur"));
-        colIsbn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
         colAnnee.setCellValueFactory(new PropertyValueFactory<>("anneePublication"));
-
-        colStatut.setCellValueFactory(cellData -> {
-            Livre livre = cellData.getValue();
-            String statut = livre.peutEtreEmprunte() ? "✅ Disponible" : "❌ Emprunté";
-            return new javafx.beans.property.SimpleStringProperty(statut);
-        });
+        colIsbn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+        colDisponible.setCellValueFactory(new PropertyValueFactory<>("disponible"));
+        
+        tableLivres.setItems(livresObservable);
     }
-
+    
+    /**
+     * Configure le composant de recherche.
+     * Initialise la ComboBox avec les critères de recherche disponibles.
+     */
     private void configurerRecherche() {
-        comboRecherche.getItems().addAll("Tous", "Titre", "Auteur", "ISBN", "Disponibles");
-        comboRecherche.setValue("Tous");
+        comboCritere.getItems().addAll("Tous", "Titre", "Auteur", "ISBN");
+        comboCritere.setValue("Tous");
     }
-
-    // MÉTHODES DE GESTION
-
+    
+    /**
+     * Charge tous les livres dans la TableView.
+     */
     private void chargerLivres() {
-        System.out.println("Chargement des livres...");
-        try {
-            listeLivres.clear();
-            List<Livre> livres = service.getTousLesLivres();
-            listeLivres.addAll(livres);
-            tableLivres.setItems(listeLivres);
-
-            lblStatus.setText("Chargé - " + livres.size() + " livre(s)");
-            System.out.println("✅ " + livres.size() + " livre(s) chargé(s)");
-
-        } catch (Exception e) {
-            afficherErreur("Erreur", "Erreur lors du chargement : " + e.getMessage());
-        }
+        List<Livre> livres = service.rechercherLivres("tous", "");
+        livresObservable.setAll(livres);
+        afficherMessage("Chargement de " + livres.size() + " livre(s)");
     }
-
-    // GESTION DES ÉVÉNEMENTS
-
-    @FXML
-    private void handleAjouter() {
-        System.out.println("Ajout d'un nouveau livre...");
-
-        try {
-            // Récupérer les valeurs des champs
-            String titre = txtTitre.getText().trim();
-            String auteur = txtAuteur.getText().trim();
-            String isbn = txtIsbn.getText().trim();
-            String anneeTexte = txtAnnee.getText().trim();
-
-            // Validation
-            if (titre.isEmpty()) {
-                afficherErreur("Erreur", "Le titre est obligatoire");
-                return;
-            }
-
-            if (auteur.isEmpty()) {
-                afficherErreur("Erreur", "L'auteur est obligatoire");
-                return;
-            }
-
-            if (isbn.isEmpty()) {
-                afficherErreur("Erreur", "L'ISBN est obligatoire");
-                return;
-            }
-
-            int annee;
-            try {
-                annee = Integer.parseInt(anneeTexte);
-            } catch (NumberFormatException e) {
-                afficherErreur("Erreur", "L'année doit être un nombre");
-                return;
-            }
-
-            // Générer un ID unique
-            String id = "LIV" + System.currentTimeMillis();
-
-            // Créer le livre
-            Livre nouveauLivre = new Livre(id, titre, auteur, annee, isbn);
-
-            // Ajouter via le service
-            boolean succes = service.ajouterLivre(nouveauLivre);
-
-            if (succes) {
-                afficherMessage("Succès", "Livre ajouté avec succès !");
-                viderChamps();
-                chargerLivres(); // Recharger la liste
-            } else {
-                afficherErreur("Erreur", "Impossible d'ajouter le livre");
-            }
-
-        } catch (Exception e) {
-            afficherErreur("Erreur", "Erreur lors de l'ajout : " + e.getMessage());
-        }
-    }
-
-    @FXML
-    private void handleSupprimer() {
-        System.out.println("Suppression d'un livre...");
-
-        // Récupérer le livre sélectionné
-        Livre livreSelectionne = tableLivres.getSelectionModel().getSelectedItem();
-
-        if (livreSelectionne == null) {
-            afficherErreur("Erreur", "Veuillez sélectionner un livre à supprimer");
-            return;
-        }
-
-        // Demander confirmation
-        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmation.setTitle("Confirmation");
-        confirmation.setHeaderText("Supprimer le livre");
-        confirmation.setContentText("Êtes-vous sûr de vouloir supprimer : " + livreSelectionne.getTitre() + " ?");
-
-        if (confirmation.showAndWait().get() == ButtonType.OK) {
-            // Supprimer via le service
-            boolean succes = service.supprimerLivre(livreSelectionne.getId());
-
-            if (succes) {
-                afficherMessage("Succès", "Livre supprimé avec succès");
-                chargerLivres(); // Recharger la liste
-            } else {
-                afficherErreur("Erreur", "Impossible de supprimer le livre");
-            }
-        }
-    }
-
+    
+    /**
+     * Gère l'action de recherche de livres.
+     * Appelée lorsque l'utilisateur clique sur le bouton "Rechercher".
+     */
     @FXML
     private void handleRechercher() {
-        String critere = comboRecherche.getValue();
-        String valeur = txtRecherche.getText().trim();
-
-        System.out.println("Recherche : " + critere + " = " + valeur);
-
-        if (critere.equals("Tous")) {
-            chargerLivres(); // Recharger tout
+        String critere = comboCritere.getValue().toLowerCase();
+        String valeur = champRecherche.getText();
+        
+        List<Livre> resultats = service.rechercherLivres(critere, valeur);
+        livresObservable.setAll(resultats);
+        
+        afficherMessage("Trouvé " + resultats.size() + " livre(s)");
+    }
+    
+    /**
+     * Gère l'action d'ajout d'un nouveau livre.
+     * Crée un livre de test pour démonstration.
+     */
+    @FXML
+    private void handleAjouter() {
+        try {
+            // Créer un livre de test
+            String id = "L" + System.currentTimeMillis();
+            Livre livre = new Livre(id, "Nouveau Livre", "Auteur Inconnu", 2024, "ISBN-" + id);
+            
+            service.ajouterLivre(livre);
+            afficherMessage("Livre ajouté avec succès");
+            chargerLivres();
+        } catch (IllegalArgumentException e) {
+            afficherMessage("Erreur: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * Gère l'action de modification d'un livre existant.
+     * Modifie le titre du livre sélectionné.
+     */
+    @FXML
+    private void handleModifier() {
+        Livre selection = tableLivres.getSelectionModel().getSelectedItem();
+        
+        if (selection == null) {
+            afficherMessage("Veuillez sélectionner un livre à modifier");
             return;
         }
-
+        
         try {
-            listeLivres.clear();
-            List<Livre> resultats = service.rechercherLivres(critere, valeur);
-            listeLivres.addAll(resultats);
-
-            lblStatus.setText("Recherche - " + resultats.size() + " résultat(s)");
-
-            if (resultats.isEmpty()) {
-                afficherMessage("Information", "Aucun livre trouvé");
-            }
-
-        } catch (Exception e) {
-            afficherErreur("Erreur", "Erreur lors de la recherche : " + e.getMessage());
+            // Modifier le titre (exemple simple)
+            selection.setTitre(selection.getTitre() + " (modifié)");
+            service.modifierLivre(selection);
+            
+            afficherMessage("Livre modifié avec succès");
+            tableLivres.refresh();
+        } catch (IllegalArgumentException e) {
+            afficherMessage("Erreur: " + e.getMessage());
         }
     }
-
+    
+    /**
+     * Gère l'action de suppression d'un livre.
+     * Demande confirmation avant de supprimer.
+     */
     @FXML
-    private void handleActualiser() {
-        System.out.println("Actualisation...");
+    private void handleSupprimer() {
+        Livre selection = tableLivres.getSelectionModel().getSelectedItem();
+        
+        if (selection == null) {
+            afficherMessage("Veuillez sélectionner un livre à supprimer");
+            return;
+        }
+        
+        // Demander confirmation
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmation.setTitle("Confirmation de suppression");
+        confirmation.setHeaderText("Supprimer le livre");
+        confirmation.setContentText("Êtes-vous sûr de vouloir supprimer \"" + selection.getTitre() + "\" ?");
+        
+        if (confirmation.showAndWait().get() == ButtonType.OK) {
+            service.supprimerLivre(selection.getId());
+            afficherMessage("Livre supprimé avec succès");
+            chargerLivres();
+        }
+    }
+    
+    /**
+     * Rafraîchit la liste des livres.
+     * Recharge tous les livres depuis la base de données.
+     */
+    @FXML
+    private void handleRafraichir() {
         chargerLivres();
+        afficherMessage("Liste rafraîchie");
     }
-
-    // MÉTHODES UTILITAIRES
-
-    private void viderChamps() {
-        txtTitre.clear();
-        txtAuteur.clear();
-        txtIsbn.clear();
-        txtAnnee.clear();
-        txtTitre.requestFocus();
+    
+    /**
+     * Affiche un message à l'utilisateur.
+     * 
+     * @param message Message à afficher
+     */
+    private void afficherMessage(String message) {
+        labelMessage.setText(message);
     }
-
-    private void afficherMessage(String titre, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(titre);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+    
+    /**
+     * Retourne le livre actuellement sélectionné dans la table.
+     * 
+     * @return Livre sélectionné, ou null si aucun livre n'est sélectionné
+     */
+    public Livre getLivreSelectionne() {
+        return tableLivres.getSelectionModel().getSelectedItem();
     }
-
-    private void afficherErreur(String titre, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(titre);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    // MÉTHODES D'ACCÈS (pour tests)
-
-    public BibliothequeService getService() {
-        return service;
-    }
-
-    public ObservableList<Livre> getListeLivres() {
-        return listeLivres;
+    
+    /**
+     * Vérifie si un livre est actuellement sélectionné.
+     * 
+     * @return true si un livre est sélectionné, false sinon
+     */
+    public boolean isLivreSelectionne() {
+        return getLivreSelectionne() != null;
     }
 }
