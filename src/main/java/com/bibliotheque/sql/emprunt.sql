@@ -28,10 +28,7 @@ CREATE TABLE IF NOT EXISTS emprunt (
         ON UPDATE CASCADE
         ON DELETE RESTRICT
 
-) ENGINE=InnoDB
-DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_unicode_ci;
-
+) 
 --emprunt non rendu
 INSERT INTO emprunt (
     isbn_livre,
@@ -93,3 +90,4 @@ INSERT INTO emprunt (
     '2025-01-10',
     '2025-01-24'
 );
+
