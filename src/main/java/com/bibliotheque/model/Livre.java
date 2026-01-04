@@ -52,6 +52,10 @@ public class Livre extends Document implements Empruntable {
     }
 
     public String getIsbn() { return isbn; }
+    public void setIsbn(String isbn){
+        this.isbn = isbn;
+        this.isbnProperty.set(isbn);
+    }
 
     // Propriétés JavaFX
     public StringProperty isbnProperty() { return isbnProperty; }
@@ -90,3 +94,4 @@ public class Livre extends Document implements Empruntable {
         return titre + " (" + auteur + ", " + anneePublication + ")";
     }
 }
+
