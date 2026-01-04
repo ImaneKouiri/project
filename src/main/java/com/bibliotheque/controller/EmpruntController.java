@@ -118,13 +118,10 @@ public class EmpruntController {
                 return;
             }
             
-            // Livre livre = livreService.findByIsbn(isbn);
-            Livre livre = new Livre();
-            livre.setIsbn(isbn);
-            livre.setDisponible(true);
-            // Membre membre = membreService.findById(membreId);
-            Membre membre = new Membre();
-            membre.setId(membreId);
+            Livre livre = LivreService.findByIsbn(isbn);
+            
+            Membre membre = membreService.findById(membreId);
+            
             
             empruntService.emprunterLivre(livre, membre);
             
@@ -413,4 +410,5 @@ public class EmpruntController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
 }
