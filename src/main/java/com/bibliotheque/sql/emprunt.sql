@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS emprunt (
         ON UPDATE CASCADE
         ON DELETE RESTRICT
 
-) 
+);
 --emprunt non rendu
 INSERT INTO emprunt (
     isbn_livre,
@@ -90,4 +90,5 @@ INSERT INTO emprunt (
     '2025-01-10',
     '2025-01-24'
 );
+
 
