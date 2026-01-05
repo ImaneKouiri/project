@@ -10,6 +10,7 @@ import com.bibliotheque.service.EmpruntService;
 import com.bibliotheque.exception.LimiteEmpruntDepasseeException;
 import com.bibliotheque.exception.EmpruntIntrouvableException;
 import com.bibliotheque.exception.EmpruntDejaRetourneException;
+import com.bibliotheque.service.BibliothequeService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,6 +19,12 @@ public class TestModel {
 
     // ===== Variables globales pour les tests d'emprunts =====
     private static EmpruntService empruntService = new EmpruntService();
+    private static int testsReussis = 0;
+    private static int testsEchoues = 0;
+
+    // ===== Variables globales pour les tests d'emprunts =====
+    private static EmpruntService empruntService = new EmpruntService();
+    private static BibliothequeService bibliothequeService = new BibliothequeService();  // ← AJOUT
     private static int testsReussis = 0;
     private static int testsEchoues = 0;
 
@@ -145,6 +152,8 @@ public class TestModel {
         System.out.println("Total: " + membres.length);
         System.out.println("Actifs: " + actifs);
         System.out.println("Inactifs: " + inactifs);
+
+        testHistoriqueMembre();
 
         System.out.println("\n===== FIN TEST MODULE MEMBRES =====\n");
     }
@@ -398,4 +407,71 @@ public class TestModel {
         else System.out.println("\nCertains tests ont échoué. Vérifiez les erreurs ci-dessus.");
         System.out.println("════════════════════════════════════════════════════════\n");
     }
+
+    // ========== TEST HISTORIQUE DES EMPRUNTS D'UN MEMBRE ==========
+    private static void testHistoriqueMembre() {
+        
+        try {
+            // Test avec un membre qui a des emprunts (ID=1 d'après le SQL)
+            System.out.println("Récupération de l'historique du membre ID=1...");
+            
+            List<Emprunt> historique = bibliothequeService.getHistoriqueEmprunts(1);
+            
+            if (historique.isEmpty()) {
+                System.out.println("   Aucun emprunt trouvé pour ce membre");
+                System.out.println("     (Normal si la table emprunts est vide)");
+            } else {
+                System.out.println("   Nombre d'emprunts trouvés : " + historique.size());
+                
+                
+                // Afficher les détails de chaque emprunt
+                for (int i = 0; i < historique.size(); i++) {
+                    Emprunt e = historique.get(i);
+                    System.out.println("  Emprunt #" + (i + 1));
+                    System.out.println("     ID : " + e.getId());
+                    
+                    if (e.getLivre() != null) {
+                        System.out.println("     Livre ISBN : " + e.getLivre().getIsbn());
+                    }
+                    
+                    System.out.println("     Date emprunt : " + e.getDateEmprunt());
+                    System.out.println("     Date retour prévue : " + e.getDateRetourPrevue());
+                    System.out.println("     Statut : " + (e.isRendu() ? "Retourné" : " En cours"));
+                    
+                    if (e.isRendu() && e.getDateRetourEffective() != null) {
+                        System.out.println("     Date retour effective : " + e.getDateRetourEffective());
+                    }
+                    
+                    if (e.getPenalite() > 0) {
+                        System.out.println("     Pénalité : " + e.getPenalite() + " DH");
+                    }
+                    
+                    if (e.estEnRetard()) {
+                        System.out.println(" EN RETARD de " + e.calculerJoursRetard() + " jours");
+                    }
+                    
+                    System.out.println();
+                }
+                
+                testReussi("Historique récupéré avec succès");
+            }
+            
+            // Test avec un membre qui n'existe pas
+            System.out.println("Test avec un membre inexistant (ID=99999)...");
+            try {
+                bibliothequeService.getHistoriqueEmprunts(99999);
+                testEchoue("L'exception ValidationException n'a pas été levée");
+            } catch (ValidationException ex) {
+                System.out.println("   Exception levée correctement : " + ex.getMessage());
+                testReussi("Gestion des erreurs fonctionne");
+            }
+            
+        } catch (Exception e) {
+            testEchoue("Erreur inattendue : " + e.getMessage());
+            e.printStackTrace();
+        }
+        
+        System.out.println();
+    }
+}
 }
