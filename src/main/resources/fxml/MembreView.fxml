@@ -16,15 +16,9 @@
     <HBox spacing="10" alignment="CENTER_LEFT">
         <Label text="Rechercher:" style="-fx-font-weight: bold;"/>
         <TextField fx:id="txtRecherche" 
-<<<<<<< HEAD
                 promptText="Nom, prénom ou email..." 
                 prefWidth="300"
                 onKeyReleased="#handleRecherche"/>
-=======
-                  promptText="Nom, prénom ou email..." 
-                  prefWidth="300"
-                  onKeyReleased="#handleRecherche"/>
->>>>>>> 1a25703a19991cef0786c2f8ae5cc64b56a8460c
         <Button text="+ Nouveau Membre" onAction="#handleNouveauMembre"/>
     </HBox>
     

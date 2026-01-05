@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.io.IOException;
 
 public class DatabaseConnection {
-    // 1. Instance unique statique
+    // 1. Instance unique statique (singleton)
     private static DatabaseConnection instance;
     // 2. Connexion à partager
     private Connection connection;

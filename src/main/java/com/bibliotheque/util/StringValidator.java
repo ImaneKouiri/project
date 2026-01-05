@@ -10,10 +10,6 @@ public class StringValidator {
   // ISBN-10 ou ISBN-13 (chiffres + tirets autorisés)
   private static final Pattern ISBN_PATTERN = Pattern.compile("^(97(8|9))?\\d{9}(\\d|X)$");
 
-  private StringValidator() {
-    // Empêche l'instanciation (classe utilitaire)
-  }
-
   public static boolean isNullOrEmpty(String value) {
     return value == null || value.trim().isEmpty();
   }
